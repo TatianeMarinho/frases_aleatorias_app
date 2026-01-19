@@ -1,9 +1,18 @@
 # frase_aleatoria_app
 # Frases Retilianas 🦎
 
-![Demonstração do App](images/demonstracao.gif)
-
-Um aplicativo Flutter desenvolvido para gerar frases motivacionais e reflexivas com um design dinâmico e moderno.
+<table>
+  <tr>
+    <td width="300">
+      <img src="images/demonstracao.gif" width="250" alt="Demonstração do App">
+    </td>
+    <td>
+      <h3>Sobre o Projeto</h3>
+      <p>Um aplicativo Flutter desenvolvido para gerar frases motivacionais e reflexivas com um design dinâmico e moderno.</p>
+      <p>O app sorteia frases de uma lista personalizada e altera as cores da interface (AppBar e Botão) automaticamente, garantindo sempre o melhor contraste para leitura.</p>
+    </td>
+  </tr>
+</table>
 
 ## 🚀 O que este projeto faz?
 O app sorteia frases de uma lista pré-definida e, simultaneamente, altera a identidade visual do aplicativo (AppBar, Botão e Texto) com base em uma paleta de cores personalizada.
