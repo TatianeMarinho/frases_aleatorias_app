@@ -1,4 +1,3 @@
-# frase_aleatoria_app
 # Frases Retilianas 🦎
 
 <table>
