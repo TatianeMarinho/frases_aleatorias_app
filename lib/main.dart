@@ -1,121 +1,146 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MaterialApp(
+      home: Home(), //MaterialApp
+      debugShowCheckedModeBanner: false,
+    ),
+  ); //remove a faixa de debug
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Home extends StatefulWidget {
+  //usa para avisar que a pag tem estados que podem mudar
+  const Home({super.key}); //para performance e organizaçao do flutter
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+  @override //sobrescreve a classe padrao
+  State<Home> createState() => _HomeState(); //para mandar usar a logica e os dados da classe _HomeState
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class _HomeState extends State<Home> {
+  //classe que define o app
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+  final _frases = [
+    "Enquanto tu for o que os outros querem, tu não vai ser nada",
+    "Separados somos fortes, juntos, imbatíveis",
+    "Erros do passado, vale repensar",
+    "Quem não é solução também faz parte do problema",
+    "Prefiro cair do que me curvar",
+    "Subversivos não nascem prontos, são moldados",
+    "E se a carapuça serviu, normal, Crianças sempre levam tudo pro lado pessoal",
+    "Abelha não explica pra mosca que mel é melhor que merda",
+    "Ninguém liga pra tua história até você vencer, então, vença",
+    "Preso ao progresso, é a minha sentença",
+    "Enquanto avanço, eu vejo no retrovisor aquilo que foi conquistado",
+    "Todo dia quero, Me libertar aos poucos da melancolia",
+    "O mundo pertence aos que são mais pra frente",
+  ];
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+  final List<Color> _coresPaleta = [
+    Color(0xFFBFB0A3),
+    Color(0xFF593A27),
+    Color(0xFFA67153),
+    Color(0xFF260F07),
+  ];
 
-  final String title;
+  var _fraseGerada = "Clique abaixo para gerar uma frase!";
+  Color _corAtual = Color(0xFF593A27);
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+  void _gerarFrase() {
+    var sorteador = Random().nextInt(_frases.length);
+    var sortearCor = Random().nextInt(_coresPaleta.length);
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _fraseGerada = _frases[sorteador];
+      _corAtual = _coresPaleta[sortearCor];
     });
   }
 
-  @override
+  Color _corDoTexto(Color corDeFundo) {
+    return corDeFundo.computeLuminance() > 0.4
+        ? const Color(0xFF260F07)
+        : const Color(0xFFD9D9D9);
+  }
+
+  @override //?
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    //constroi a interface
     return Scaffold(
+      //esqueleto da tela
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        //barra do topo
+        title: Text(
+          "Frases Retilianas",
+          style: TextStyle(color: _corDoTexto(_corAtual)),
+        ),
+        backgroundColor: _corAtual, // a barra muda de cor
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(30),
+        decoration: BoxDecoration(
+          color: _corAtual.withValues(alpha: 0.15),
+        ), //pega a cor atual e deixa mais clara
+        //corpo do app
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
+          //organiza na vertical
+          mainAxisAlignment: MainAxisAlignment
+              .start, //distribui os filhos c/espaços iguais entre eles
+          crossAxisAlignment: CrossAxisAlignment
+              .center, //alinha tudo no centro da largura da coluna
+          children: <Widget>[
+            ClipRRect(
+              //para arredondar os cantos de imagens
+              borderRadius: BorderRadius.circular(80),
+              child: Image.asset(
+                "images/logo.jpg",
+                height: 120, //difine a altura da imagem
+              ),
+            ),
+
+            const Spacer(), // empurra o que vem abaixo para o meio
+
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              _fraseGerada,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 22,
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+                color: _corAtual, // para mudar a cor do texto
+              ),
+            ),
+
+            const Spacer(),
+
+            ElevatedButton(
+              //botao com sombra
+              onPressed: _gerarFrase, //açao do botao
+              style: ElevatedButton.styleFrom(
+                //onde define o design do botao
+                backgroundColor: _corAtual, // cor de fundo
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 15,
+                ),
+                shape: RoundedRectangleBorder(
+                  // deixar o botao arredondado
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              child: Text(
+                "PRÓXIMA FRASE",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: _corDoTexto(_corAtual),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
