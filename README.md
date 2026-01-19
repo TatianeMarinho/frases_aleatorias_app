@@ -14,9 +14,6 @@
   </tr>
 </table>
 
-## 🚀 O que este projeto faz?
-O app sorteia frases de uma lista pré-definida e, simultaneamente, altera a identidade visual do aplicativo (AppBar, Botão e Texto) com base em uma paleta de cores personalizada.
-
 ## 🧠 Aprendizados Técnicos
 Neste projeto, apliquei conceitos fundamentais de Flutter e Dart:
 
